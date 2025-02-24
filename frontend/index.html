@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend</title>
+  </head>
+  <body>
+    <h1>Hello from Frontend!</h1>
+    <p id="api-response"></p>
+    <p id="ml-response"></p>
+
+    <script>
+      fetch("http://api:3000/data")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("api-response").innerText =
+            "API Response: " + data.message;
+        });
+
+      fetch("http://backend:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input: "sample" }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("ml-response").innerText =
+            "ML Response: " + data.prediction;
+        });
+    </script>
+  </body>
+</html>
