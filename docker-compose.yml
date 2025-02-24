@@ -8,6 +8,8 @@ services:
     depends_on:
       - api
       - backend
+    networks:
+      - my-network
 
   api:
     build: ./api
@@ -15,6 +17,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    networks:
+      - my-network
 
   backend:
     build: ./backend
@@ -22,6 +26,8 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    networks:
+      - my-network
 
   db:
     image: postgres:13
@@ -33,3 +39,9 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
